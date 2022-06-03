@@ -38,6 +38,22 @@ public class FXMLController {
 
     @FXML
     void doContaArchi(ActionEvent event) {
+    	
+    	try {
+    		
+    		double soglia = Double.parseDouble(txtSoglia.getText());
+    		
+    		if(soglia<this.model.getPesoMinimo() || soglia>this.model.getPesoMassimo()) {
+    			txtResult.appendText("\nInserire una soglia tra peso minimo e peso massimo!");
+    			return;
+    		}
+    		
+    		txtResult.appendText(this.model.stampaConSoglia(soglia));
+    		
+    	}catch(NumberFormatException e) {
+    		txtResult.appendText("\nErrore - inserire una soglia numerica");
+    		return;
+    	}
 
     }
 
@@ -57,6 +73,10 @@ public class FXMLController {
 
 	public void setModel(Model model) {
 		this.model = model ;
+		
+		String msg = this.model.creaGrafo();
+		txtResult.clear();
+		txtResult.setText(msg);
 		
 	}
 }
